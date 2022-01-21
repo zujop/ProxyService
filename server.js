@@ -211,6 +211,7 @@ httpProxy.on('proxyReq', onProxyReq);
 httpProxy.on('proxyRes', onProxyRes);
 
 const doProxy = (target, proto, req, res) => {
+  console.log(target,proto,req,res)
   var options = {
     target: proto + '://' + target.host
   };
@@ -224,9 +225,9 @@ const doProxy = (target, proto, req, res) => {
 };
 
 server.on('request', (req, res) => {
-  console.log(req)
   const method = req.headers['proxy-target-override-method'];
   if (method) {
+    console.log('yea1')
     if (ALLOWED_METHODS.includes(method)) {
       req.method = method;
     } else {
@@ -239,8 +240,10 @@ server.on('request', (req, res) => {
     writeErr(res, 400, 'Invalid target protocol');
     return;
   }
+  console.log('yea2')
   const accessKey = req.headers['proxy-access-key'];
   const requestedTarget = req.headers['proxy-target'];
+  console.log(`${accessKey} ${requestedTarget}`)
   if (accessKey && requestedTarget) {
     req.on('error', (err) => {
       console.error(`Request error: ${err}`);

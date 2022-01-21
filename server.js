@@ -249,6 +249,7 @@ server.on('request', (req, res) => {
       console.error(`Request error: ${err}`);
     });
     const accessKeyBuffer = Buffer.from(accessKey);
+    console.log(ACCESS_KEY)
     if (accessKeyBuffer.length === ACCESS_KEY.length && crypto.timingSafeEqual(accessKeyBuffer, ACCESS_KEY)) {
       let parsedTarget;
       try {

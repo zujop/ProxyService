@@ -226,8 +226,8 @@ const doProxy = (target, proto, req, res) => {
 
 server.on('request', (req, res) => {
   const method = req.headers['proxy-target-override-method'];
+  console.log(method)
   if (method) {
-    console.log('yea1')
     if (ALLOWED_METHODS.includes(method)) {
       req.method = method;
     } else {

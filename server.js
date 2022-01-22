@@ -35,6 +35,7 @@ client.on("ready", () => {
 })
 
 client.on("message", (message) => {
+  console.log(message)
   if (message.author.bot) return
     if (!message.guild) return
     const prefix = '-'

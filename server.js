@@ -255,6 +255,7 @@ server.on('request', (req, res) => {
       try {
         parsedTarget = new URL(`https://${requestedTarget}`);
       } catch (e) {
+        console.log('400 Invalid Target')
         writeErr(res, 400, 'Invalid target');
         return;
       }

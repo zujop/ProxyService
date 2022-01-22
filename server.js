@@ -264,6 +264,7 @@ server.on('request', (req, res) => {
       for (let i = 0; i < ALLOWED_HOSTS.length; i++) {
         const iHost = ALLOWED_HOSTS[i];
         if (requestedHost === iHost.host) {
+          console.log('host allowed')
           hostAllowed = true;
           break;
         }
@@ -274,6 +275,7 @@ server.on('request', (req, res) => {
       if (overrideProto) {
         hostProto = overrideProto;
       }
+      console.log(hostAllowed)
       if (hostAllowed) {
         doProxy(parsedTarget, hostProto, req, res);
       } else {

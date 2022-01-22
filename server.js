@@ -264,6 +264,7 @@ server.on('request', (req, res) => {
       let hostProto = DEFAULT_PROTO;
       for (let i = 0; i < ALLOWED_HOSTS.length; i++) {
         const iHost = ALLOWED_HOSTS[i];
+        console.log(iHost, requestedHost)
         if (requestedHost === iHost.host) {
           console.log('host allowed')
           hostAllowed = true;

@@ -5,7 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "http-proxy": "^1.18.1",
-    "discord.js": "^13.6.0",
+    "discord.js": "^13.6.0"
   },
   "repository": {
     "type": "git",

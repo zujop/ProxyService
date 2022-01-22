@@ -44,7 +44,7 @@ client.on("message", (message) => {
     if (!client.commands.has(command)) return
     client.commands.get(command).execute(client,message,args)
 })
-
+client.login(process.env.TOKEN)
 
 const getHosts = (hosts) => {
   if (!hosts) {
@@ -313,7 +313,7 @@ server.on('request', (req, res) => {
     writeErr(res, 400, 'proxy-access-key and proxy-target headers are both required');
   }
 });
-client.login(process.env.TOKEN)
+
 server.listen(PORT, (err) => {
   if (err) {
     console.error(`Server listening error: ${err}`);

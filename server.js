@@ -259,7 +259,9 @@ server.on('request', (req, res) => {
         writeErr(res, 400, 'Invalid target');
         return;
       }
+      console.log('n0o')
       const requestedHost = parsedTarget.host;
+      console.log('requestedHost')
       let hostAllowed = false;
       let hostProto = DEFAULT_PROTO;
       for (let i = 0; i < ALLOWED_HOSTS.length; i++) {
@@ -284,6 +286,7 @@ server.on('request', (req, res) => {
         writeErr(res, 400, 'Host not whitelisted');
       }
     } else {
+      console.log('wrong access key')
       writeErr(res, 403, 'Invalid access key');
     }
   } else {

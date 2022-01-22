@@ -211,7 +211,6 @@ httpProxy.on('proxyReq', onProxyReq);
 httpProxy.on('proxyRes', onProxyRes);
 
 const doProxy = (target, proto, req, res) => {
-  console.log(target,proto,req,res)
   var options = {
     target: proto + '://' + target.host
   };
@@ -226,7 +225,6 @@ const doProxy = (target, proto, req, res) => {
 
 server.on('request', (req, res) => {
   const method = req.headers['proxy-target-override-method'];
-  console.log(method)
   if (method) {
     if (ALLOWED_METHODS.includes(method)) {
       req.method = method;
@@ -240,35 +238,27 @@ server.on('request', (req, res) => {
     writeErr(res, 400, 'Invalid target protocol');
     return;
   }
-  console.log('yea2')
   const accessKey = req.headers['proxy-access-key'];
   const requestedTarget = req.headers['proxy-target'];
-  console.log(`${accessKey} ${requestedTarget}`)
   if (accessKey && requestedTarget) {
     req.on('error', (err) => {
       console.error(`Request error: ${err}`);
     });
     const accessKeyBuffer = Buffer.from(accessKey);
     if (accessKeyBuffer.length === ACCESS_KEY.length && crypto.timingSafeEqual(accessKeyBuffer, ACCESS_KEY)) {
-      console.log('100m')
       let parsedTarget;
       try {
         parsedTarget = new URL(`https://${requestedTarget}`);
       } catch (e) {
-        console.log('400 Invalid Target')
         writeErr(res, 400, 'Invalid target');
         return;
       }
-      console.log('n0o')
       const requestedHost = parsedTarget.host;
-      console.log('requestedHost')
       let hostAllowed = false;
       let hostProto = DEFAULT_PROTO;
       for (let i = 0; i < ALLOWED_HOSTS.length; i++) {
         const iHost = ALLOWED_HOSTS[i];
-        console.log(iHost, requestedHost)
         if (requestedHost === iHost.host) {
-          console.log('host allowed')
           hostAllowed = true;
           break;
         }
@@ -279,14 +269,12 @@ server.on('request', (req, res) => {
       if (overrideProto) {
         hostProto = overrideProto;
       }
-      console.log(hostAllowed)
       if (hostAllowed) {
         doProxy(parsedTarget, hostProto, req, res);
       } else {
         writeErr(res, 400, 'Host not whitelisted');
       }
     } else {
-      console.log('wrong access key')
       writeErr(res, 403, 'Invalid access key');
     }
   } else {
